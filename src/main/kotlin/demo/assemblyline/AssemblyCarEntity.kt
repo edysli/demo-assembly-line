@@ -1,8 +1,15 @@
 package demo.assemblyline
 
-class AssemblyCarEntity {
-  fun paint() {}
-  fun assemblyMechanics() {}
-  fun assemblyInterior() {}
-  fun build()/*: Car*/ {}
+interface AssemblyCar {
+  fun paint()
+  fun assemblyMechanics()
+  fun assemblyInterior()
+  fun build()/*: Car*/
+}
+
+class AssemblyCarEntity : AssemblyCar {
+  override fun paint() {}
+  override fun assemblyMechanics() {}
+  override fun assemblyInterior() {}
+  override fun build()/*: Car*/ {}
 }
