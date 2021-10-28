@@ -42,6 +42,18 @@ internal class StationTest {
     interior.execute(assemblyCar)
     assertEquals(1, assemblyCar.assemblyInteriorCalls)
   }
+
+  @Test
+  fun polishStationIsAStation() {
+    assertIs<Station>(PolishStation())
+  }
+
+  @Test
+  fun executingPolishStationCallsPolish() {
+    val polish = PolishStation()
+    polish.execute(assemblyCar)
+    assertEquals(1, assemblyCar.polishCalls)
+  }
 }
 
 internal class AssemblyCarSpy() : AssemblyCar {
@@ -49,6 +61,7 @@ internal class AssemblyCarSpy() : AssemblyCar {
   var assemblyMechanicsCalls = 0
   var assemblyInteriorCalls = 0
   var buildCalls = 0
+  var polishCalls = 0
 
   override fun paint() {
     paintCalls++
@@ -60,6 +73,10 @@ internal class AssemblyCarSpy() : AssemblyCar {
 
   override fun assemblyInterior() {
     assemblyInteriorCalls++
+  }
+
+  override fun polish() {
+    polishCalls++
   }
 
   override fun build(): Car {

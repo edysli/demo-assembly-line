@@ -21,3 +21,9 @@ class InteriorAssemblyStation : Station {
     assemblyCar.assemblyInterior()
   }
 }
+
+class PolishStation : Station {
+  override fun execute(assemblyCar: AssemblyCar) {
+    assemblyCar.polish()
+  }
+}

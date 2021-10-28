@@ -18,7 +18,8 @@ class AssemblyLineTest {
       listOf(
         PaintingStation(),
         MechanicAssemblyStation(),
-        InteriorAssemblyStation()
+        InteriorAssemblyStation(),
+        PolishStation()
       )
     )
     val assemblyCar = AssemblyCarSpy()
@@ -26,6 +27,7 @@ class AssemblyLineTest {
     assertEquals(1, assemblyCar.paintCalls)
     assertEquals(1, assemblyCar.assemblyMechanicsCalls)
     assertEquals(1, assemblyCar.assemblyInteriorCalls)
+    assertEquals(1, assemblyCar.polishCalls)
     assertEquals(1, assemblyCar.buildCalls)
   }
 
@@ -35,7 +37,8 @@ class AssemblyLineTest {
       listOf(
         PaintingStation(),
         MechanicAssemblyStation(),
-        InteriorAssemblyStation()
+        InteriorAssemblyStation(),
+        PolishStation()
       )
     )
     assertIs<Car>(al.produce(AssemblyCarEntity()))
