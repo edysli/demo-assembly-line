@@ -3,18 +3,13 @@ package demo.assemblyline
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 class AssemblyLineTest {
   @Test
-  fun needsAtLeastTwoStations() {
-    val ise = assertThrows<IllegalStateException> { AssemblyLine(listOf(PaintingStation())) }
-    assertEquals("At least two stations are required", ise.message)
-  }
-
-  @Test
-  fun lastStationMustBeQualityAssuranceAndBuild() {
-    val ise = assertThrows<IllegalStateException> { AssemblyLine(listOf(PaintingStation(), MechanicAssemblyStation())) }
-    assertEquals("The last station must be a quality assurance and build station", ise.message)
+  fun requiresAtLeastOneStation() {
+    val ise = assertThrows<IllegalStateException> { AssemblyLine(listOf()) }
+    assertEquals("At least one station is required", ise.message)
   }
 
   @Test
@@ -23,8 +18,7 @@ class AssemblyLineTest {
       listOf(
         PaintingStation(),
         MechanicAssemblyStation(),
-        InteriorAssemblyStation(),
-        QualityAssuranceAndBuildStation()
+        InteriorAssemblyStation()
       )
     )
     val assemblyCar = AssemblyCarSpy()
@@ -33,5 +27,17 @@ class AssemblyLineTest {
     assertEquals(1, assemblyCar.assemblyMechanicsCalls)
     assertEquals(1, assemblyCar.assemblyInteriorCalls)
     assertEquals(1, assemblyCar.buildCalls)
+  }
+
+  @Test
+  fun produceReturnsACar() {
+    val al: AssemblyLine = AssemblyLine(
+      listOf(
+        PaintingStation(),
+        MechanicAssemblyStation(),
+        InteriorAssemblyStation()
+      )
+    )
+    assertIs<Car>(al.produce(AssemblyCarEntity()))
   }
 }

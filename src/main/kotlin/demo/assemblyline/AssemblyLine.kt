@@ -2,11 +2,11 @@ package demo.assemblyline
 
 class AssemblyLine(private val stations: List<Station>) {
   init {
-    if (stations.size < 2) throw IllegalStateException("At least two stations are required")
-    if (stations.last() !is QualityAssuranceAndBuildStation) throw IllegalStateException("The last station must be a quality assurance and build station")
+    if (stations.isEmpty()) throw IllegalStateException("At least one station is required")
   }
 
-  fun produce(assemblyCar: AssemblyCar) {
+  fun produce(assemblyCar: AssemblyCar): Car {
     for (s in stations) s.execute(assemblyCar)
+    return assemblyCar.build()
   }
 }

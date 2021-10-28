@@ -21,9 +21,3 @@ class InteriorAssemblyStation : Station {
     assemblyCar.assemblyInterior()
   }
 }
-
-class QualityAssuranceAndBuildStation : Station {
-  override fun execute(assemblyCar: AssemblyCar) {
-    assemblyCar.build()
-  }
-}

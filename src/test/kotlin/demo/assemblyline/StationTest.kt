@@ -42,18 +42,6 @@ internal class StationTest {
     interior.execute(assemblyCar)
     assertEquals(1, assemblyCar.assemblyInteriorCalls)
   }
-
-  @Test
-  fun qualityAssuranceAndBuildStationIsAStation() {
-    assertIs<Station>(QualityAssuranceAndBuildStation())
-  }
-
-  @Test
-  fun executingQualityAssuranceAndBuildStationCallsBuild() {
-    val build = QualityAssuranceAndBuildStation()
-    build.execute(assemblyCar)
-    assertEquals(1, assemblyCar.buildCalls)
-  }
 }
 
 internal class AssemblyCarSpy() : AssemblyCar {
@@ -74,7 +62,8 @@ internal class AssemblyCarSpy() : AssemblyCar {
     assemblyInteriorCalls++
   }
 
-  override fun build() {
+  override fun build(): Car {
     buildCalls++
+    return Car()
   }
 }
