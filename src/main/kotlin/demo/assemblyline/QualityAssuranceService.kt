@@ -1,5 +1,7 @@
 package demo.assemblyline
 
+import kotlin.random.Random
+
 interface QualityAssuranceService {
   fun check(car: Car): Boolean
 }
@@ -20,5 +22,11 @@ class RejectingOnceQAService : QualityAssuranceService {
       calls++
       false
     }
+  }
+}
+
+class RateBasedQAService(private val acceptanceRate: Double) : QualityAssuranceService {
+  override fun check(car: Car): Boolean {
+    return Random.nextDouble() <= acceptanceRate
   }
 }
