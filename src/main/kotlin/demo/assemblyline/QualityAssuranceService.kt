@@ -9,3 +9,16 @@ class AlwaysAcceptingQAService : QualityAssuranceService {
     return true
   }
 }
+
+class RejectingOnceQAService : QualityAssuranceService {
+  var calls = 0
+  override fun check(car: Car): Boolean {
+    return if (calls > 0) {
+      calls++
+      true
+    } else {
+      calls++
+      false
+    }
+  }
+}

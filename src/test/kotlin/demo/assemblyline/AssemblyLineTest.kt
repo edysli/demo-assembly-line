@@ -49,14 +49,21 @@ class AssemblyLineTest {
   }
 
   @Test
-  fun requiresQualityAssuranceService() {
+  fun whenQAServiceRejects_runsThroughAssemblyLineAgain() {
     val al: AssemblyLine = AssemblyLine(
       listOf(
         PaintingStation(),
         MechanicAssemblyStation(),
         InteriorAssemblyStation(),
         PolishStation()
-      ), qaService
+      ), RejectingOnceQAService()
     )
+    val assemblyCar = AssemblyCarSpy()
+    al.produce(assemblyCar)
+    assertEquals(2, assemblyCar.paintCalls)
+    assertEquals(2, assemblyCar.assemblyMechanicsCalls)
+    assertEquals(2, assemblyCar.assemblyInteriorCalls)
+    assertEquals(2, assemblyCar.polishCalls)
+    assertEquals(2, assemblyCar.buildCalls)
   }
 }
