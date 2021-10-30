@@ -6,9 +6,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class AssemblyLineTest {
+  private val qaService: QualityAssuranceService = AlwaysAcceptingQAService()
+
   @Test
   fun requiresAtLeastOneStation() {
-    val ise = assertThrows<IllegalStateException> { AssemblyLine(listOf()) }
+    val ise = assertThrows<IllegalStateException> { AssemblyLine(listOf(), qaService) }
     assertEquals("At least one station is required", ise.message)
   }
 
@@ -20,7 +22,8 @@ class AssemblyLineTest {
         MechanicAssemblyStation(),
         InteriorAssemblyStation(),
         PolishStation()
-      )
+      ),
+      qaService
     )
     val assemblyCar = AssemblyCarSpy()
     al.produce(assemblyCar)
@@ -39,8 +42,21 @@ class AssemblyLineTest {
         MechanicAssemblyStation(),
         InteriorAssemblyStation(),
         PolishStation()
-      )
+      ),
+      qaService
     )
     assertIs<Car>(al.produce(AssemblyCarEntity()))
+  }
+
+  @Test
+  fun requiresQualityAssuranceService() {
+    val al: AssemblyLine = AssemblyLine(
+      listOf(
+        PaintingStation(),
+        MechanicAssemblyStation(),
+        InteriorAssemblyStation(),
+        PolishStation()
+      ), qaService
+    )
   }
 }
